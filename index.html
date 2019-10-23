@@ -9,7 +9,7 @@
   <link type="text/css" rel="stylesheet" href="/assets/libs/modelmagic-engine/css/editor.css">
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root" class="play"></div>
   <!-- sass compile locally. but very slow use test only.
   <script src="/assets/libs/in-browser-sass/in-browser-sass-standalone.min.js"></script>
   -->
@@ -18,6 +18,7 @@
   <script src="/assets/libs/modelmagic-engine/js/vendor-build.bundle.js"></script>
   <script src="/assets/libs/modelmagic-engine/js/app.bundle.js"></script>
   <script src="/assets/libs/modelmagic-engine/js/editor.bundle.js"></script>
+  <script src="/assets/libs/es6-tween/bundled/Tween.min.js"></script>
   <!-- javascript -->
   <script type="module">
     import { test0 } from './js/test0.js'
@@ -28,13 +29,14 @@
       // console.log('modelmagic.DOMContentLoaded')
     })
 
+/*
     setTimeout(()=>{
       modelmagic.api('env', function(glModule, PlaneMap, XMap){
         test0.call(this, glModule)
 //        test1.call(this, glModule)
       })
     }, 2000)
-
+*/
     // config modelmagic
     modelmagic.config({
       // up: modelmagic._Y_UP_,
@@ -63,8 +65,19 @@
       //   right : '#view2'
       // }
     }).$on('init', ()=> {
-      // console.log('got init')
+      modelmagic.api('env', function(glModule, PlaneMap, XMap){
+        const meshes = test0.call(this, glModule)
+        // console.log('got init')
+        TWEEN.autoPlay(true) // simplify the your code
 
+        let tween0 = new TWEEN.Tween(meshes[0].position).to({ x: 1000, y: 1000 }, 30000).on('update', ({ x, y }) => {
+          console.log(`The values is x: ${x} and y: ${y}`)
+        }).start()
+
+        let tween1 = new TWEEN.Tween(meshes[1].position).to({ x: -1000, y: 1000, z: -3000 }, 60000).on('update', ({ x, y, z }) => {
+          console.log(`The values is x: ${x} and y: ${y} and z : ${z}`)
+        }).start()
+      })
 
     }).$on('cameraAdd', (data) => {
       // console.log('cameraAdd = ' + data)
