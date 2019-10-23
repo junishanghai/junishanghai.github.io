@@ -25,16 +25,15 @@
 
     // modelmagic.editor('createUI')
     modelmagic.$on('ready',() => {
-      console.log('modelmagic.DOMContentLoaded')
+      // console.log('modelmagic.DOMContentLoaded')
     })
-    /*
+
     setTimeout(()=>{
       modelmagic.api('env', function(glModule, PlaneMap, XMap){
         test0.call(this, glModule)
-        test1.call(this, glModule)
+//        test1.call(this, glModule)
       })
     }, 2000)
-    */
 
     // config modelmagic
     modelmagic.config({
@@ -48,12 +47,15 @@
       likeSU : false,
       loadQuiet : false,
       axesHelper: true,
-      gridHelper: false,
+      gridHelper: true,
       camera: {
         fov: 60,
         near : 10,
-        far: 18000000,
-        position: { x: 1, y: 10000, z: -1},
+        // far: 18000000,
+        // position: { x: 1, y: 10000, z: -1},
+        // lookAt: { x: 1, y: 10, z: -1}
+        far: 10000,
+        position: { x: 1, y: 100, z: -1},
         lookAt: { x: 1, y: 10, z: -1}
       }
       // ,view : {
@@ -61,14 +63,14 @@
       //   right : '#view2'
       // }
     }).$on('init', ()=> {
-      console.log('got init')
+      // console.log('got init')
 
 
     }).$on('cameraAdd', (data) => {
-      console.log('cameraAdd = ' + data)
+      // console.log('cameraAdd = ' + data)
 
     }).$on('cameraActive', ( name ) => {
-      console.log('cameraActive = ' + name)
+      // console.log('cameraActive = ' + name)
       const type = modelmagic.query('system', 'activeCamera.type')
       const src = type === 'PerspectiveCamera' ? '/assets/images/PerspectiveCamera.png'
         : (type === 'OrthographicCamera' ? '/assets/images/OrthographicCamera.png' : null)
